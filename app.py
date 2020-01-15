@@ -38,8 +38,8 @@ def welcome():
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
-        f"/api/v1.0/<start><br/>"
-        f"/api/v1.0/<start>/<end><br/>"
+        f"/api/v1.0/<start_date><br/>"
+        f"/api/v1.0/<start_date>/<end_date>"
     )
 
 
@@ -66,28 +66,90 @@ def precipitation():
 
     return jsonify(precip_data)
 
-@app.route("/api/v1.0/passengers")
-def passengers():
-    # Create our session (link) from Python to the DB
+@app.route("/api/v1.0/stations")
+def stations():
+    # Create our session from Python to the DB
     session = Session(engine)
 
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
-    # Query all passengers
-    results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
+    """Return a list of stations from the dataset"""
+    # Query all stations
+    results = session.query(Station.station).all()
 
     session.close()
 
-    # Create a dictionary from the row data and append to a list of all_passengers
-    all_passengers = []
-    for name, age, sex in results:
-        passenger_dict = {}
-        passenger_dict["name"] = name
-        passenger_dict["age"] = age
-        passenger_dict["sex"] = sex
-        all_passengers.append(passenger_dict)
+    # Convert list of tuples into normal list
+    all_stations = list(np.ravel(results))
 
-    return jsonify(all_passengers)
+    return jsonify(all_stations)
 
+@app.route("/api/v1.0/tobs")
+def tobs():
+    # Create our session from Python to the DB
+    session = Session(engine)
+
+    """Return a list of Temp Obvs Data including Date and Amount of Temp Obvs"""
+    # Query to retrieve the last 12 months of temp obvs data
+    start_date = dt.date(2017, 8, 23) - dt.timedelta(days=365)
+
+    results = session.query(Measurement.date, Measurement.tobs).filter(Measurement.date >= start_date).all()
+
+    session.close()
+
+    # Create a dictionary from the row data and append to a list of tobs_data
+    tobs_data = []
+    for date, tobs in results:
+        tobs_dict = {}
+        tobs_dict["date"] = date
+        tobs_dict["tobs"] = tobs
+        tobs_data.append(tobs_dict)
+
+    return jsonify(tobs_data)
+
+@app.route("/api/v1.0/<start_date>")
+def start(start_date):
+    # Create our session from Python to the DB
+    session = Session(engine)
+
+    """Return a JSON list of the min temp, avg temp, max temp for >= given start date"""
+    # Query to calculate tmin, tavg, and tmax for all dates greater than and equal to the start date.
+    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+        filter(Measurement.date >= start_date).all()
+
+    session.close()
+
+    # Create a dictionary from the tmin, tavg, tmax data
+    temp_data = []
+    for tmin, tavg, tmax in results:
+        temp_dict = {}
+        temp_dict["tmin"] = tmin
+        temp_dict["tavg"] = tavg
+        temp_dict["tmax"] = tmax
+        temp_data.append(temp_dict)
+
+    return jsonify(temp_data)
+
+@app.route("/api/v1.0/<start_date>/<end_date>")
+def start_end(start_date, end_date):
+    # Create our session from Python to the DB
+    session = Session(engine)
+
+    """Return a JSON list of the min temp, avg temp, max temp for given start-end range"""
+    # Query to calculate tmin, tavg, and tmax for for dates between the start and end date inclusive.
+    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+        filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
+
+    session.close()
+
+    # Create a dictionary from the tmin, tavg, tmax data
+    temp_data = []
+    for tmin, tavg, tmax in results:
+        temp_dict = {}
+        temp_dict["tmin"] = tmin
+        temp_dict["tavg"] = tavg
+        temp_dict["tmax"] = tmax
+        temp_data.append(temp_dict)
+
+    return jsonify(temp_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

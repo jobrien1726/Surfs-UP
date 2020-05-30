@@ -10,6 +10,8 @@ This project was mainly focused on the practice of data storage and retrieval. T
 - Python
 - Pandas
 - Matplotlib
+- DateTime
+- NumPy
 - Flask
 
 ## Data Exploration

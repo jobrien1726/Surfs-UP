@@ -23,7 +23,7 @@ A query was designed to retrieve the last 12 months of precipitation data. The r
 
 Pandas was used to find the summary statistics.
 
-![] (Images/precip_stats.png)
+![](Images/precip_stats.png)
 
 
 

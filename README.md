@@ -10,6 +10,7 @@ This project was mainly focused on the practice of data storage and retrieval. T
 - Python
 - Pandas
 - Matplotlib
+- Flask
 
 ## Data Exploration
 
@@ -34,3 +35,7 @@ A SQLAlchemy ORM query was designed to analyze the following:
 The results of the final query were then plotted as a histogram with 12 bins using a combination of the DataFrame plot function and Matplotlib. 
 
 ![](Images/tobs_hist.png)
+
+## Climate App 
+
+Once the initial analysis was complete, a Flask application was developed, including various different routes that convey the results learned through the previous queries.

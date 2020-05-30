@@ -17,7 +17,13 @@ SQLAlchemy ORM queries were used to analyze the following:
 
 ### Precipitation Analysis
 
-A query was designed to retrieve the last 12 months of precipitation data. The results were then put into a Pandas DataFrame and susequently put into a plot using the DataFrame plot method. Pandas was used to find the summary statistics. 
+A query was designed to retrieve the last 12 months of precipitation data. The results were then put into a Pandas DataFrame and susequently put into a plot using the DataFrame plot method.  
+
+![](Images/precip_plot.png)
+
+Pandas was used to find the summary statistics.
+
+![] (Images/precip_stats.png)
 
 
 

@@ -13,17 +13,30 @@ This project was mainly focused on the practice of data storage and retrieval. T
 
 ## Data Exploration
 
-SQLAlchemy ORM queries were used to analyze the following:
-
 ### Precipitation Analysis
 
-A query was designed to retrieve the last 12 months of precipitation data. The results were then put into a Pandas DataFrame and susequently put into a plot using the DataFrame plot method.  
+A SQLAlchemy ORM query was designed to retrieve the last 12 months of precipitation data. The results were then put into a Pandas DataFrame and susequently put into a plot using the DataFrame plot method.  
 
 ![](Images/precip_plot.png)
 
 Pandas was used to find the summary statistics.
 
 ![](Images/precip_stats.png)
+
+### Station Analysis
+
+A SQLAlchemy ORM query was designed to analyze the following:
+
+1. Calculate the total number of stations.
+2. Find the most active stations.
+3. Retrieve the last 12 months of temperature observation data (tobs).
+
+The results of the final query were then plotted as a histogram with 12 bins using a combination of the DataFrame plot function and Matplotlib. 
+
+
+
+
+
 
 
 

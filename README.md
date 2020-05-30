@@ -33,15 +33,4 @@ A SQLAlchemy ORM query was designed to analyze the following:
 
 The results of the final query were then plotted as a histogram with 12 bins using a combination of the DataFrame plot function and Matplotlib. 
 
-
-
-
-
-
-
-
-
-
-
-
-
+![](Images/tobs_hist.png)

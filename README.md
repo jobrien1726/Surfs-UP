@@ -41,3 +41,5 @@ The results of the final query were then plotted as a histogram with 12 bins usi
 ## Climate App 
 
 Once the initial analysis was complete, a Flask application was developed, including various different routes that convey the results learned through the previous queries.
+
+![](Images/flask.png)
